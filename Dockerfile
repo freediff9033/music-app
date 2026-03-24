@@ -1,11 +1,13 @@
 # STAGE 1: Build the app
 FROM maven:3.8.6-openjdk-18 AS build
+
+# This copies everything from your "Root Directory"
 COPY . /usr/src/app
 
-# This stays as is:
-WORKDIR /usr/src/app/code-with-quarkus
+# Tell Maven to work right here in the app folder
+WORKDIR /usr/src/app
 
-RUN mvn clean package -DskipTests
+# Now Maven will find the pom.xml immediately
 RUN mvn clean package -DskipTests
 # STAGE 2: The "Dining Room" (Run the app)
 # This uses the official Quarkus runtime image 
