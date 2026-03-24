@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>QuarkusCloud - Login</title>
+    <style>
+        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background: #f0f2f5; }
+        .card { background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 300px; text-align: center; }
+        input { width: 90%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; }
+        button { width: 100%; padding: 10px; margin: 5px 0; cursor: pointer; border: none; border-radius: 4px; background: #007bff; color: white; }
+        .secondary { background: #6c757d; }
+        #main-app { display: none; } /* Hidden until login works */
+        #error-msg { color: red; font-size: 0.8rem; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+    <div id="login-section" class="card">
+        <h2>🧡 QuarkusCloud</h2>
+        
+        <input type="text" id="username" placeholder="Username">
+        <input type="password" id="password" placeholder="Password">
+        
+        <button onclick="handleAuth('/auth/login')">Login</button>
+        <button class="secondary" onclick="handleAuth('/auth/signup')">Create Account</button>
+        
+        <div id="error-msg"></div>
+    </div>
+
+   <div id="main-app" class="card" style="width: 80%; max-width: 800px;">
+    <h2 id="user-display">Welcome!</h2>
+    <p>Select your favorite genre to start listening:</p>
+
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 20px;">
+        <div style="background: #ff7675; padding: 20px; border-radius: 8px; cursor: pointer;">🎸 Rock</div>
+        <div style="background: #74b9ff; padding: 20px; border-radius: 8px; cursor: pointer;">🎹 Pop</div>
+        <div style="background: #55efc4; padding: 20px; border-radius: 8px; cursor: pointer;">🎧 Lo-Fi</div>
+        <div style="background: #ffeaa7; padding: 20px; border-radius: 8px; cursor: pointer;">🎷 Jazz</div>
+        <div style="background: #a29bfe; padding: 20px; border-radius: 8px; cursor: pointer;">🔥 Hip Hop</div>
+        <div style="background: #fab1a0; padding: 20px; border-radius: 8px; cursor: pointer;">🎻 Classical</div>
+    </div>
+
+    <div id="upload-section" style="margin-top: 30px; border-top: 1px solid #ddd; padding-top: 20px;">
+    <h3>Upload a Song</h3>
+    <input type="text" id="songTitle" placeholder="Song Title">
+    <input type="text" id="songArtist" placeholder="Artist">
+    
+    <select id="songGenre">
+        <option value="Rock">Rock</option>
+        <option value="Pop">Pop</option>
+        <option value="Lo-Fi">Lo-Fi</option>
+        <option value="Jazz">Jazz</option>
+    </select>
+    <input type="file" id="songFile" accept=".mp3,.wav" style="margin: 10px 0;">
+    
+    <button onclick="uploadSong()">Upload to Cloud</button>
+</div>
+
+<div id="library-section" style="margin-top: 40px;">
+    <h2>Music Library</h2>
+    <table border="1" style="width: 100%; text-align: left; border-collapse: collapse;">
+        <thead>
+            <tr style="background-color: #f2f2f2;">
+                <th>Title</th>
+                <th>Artist</th>
+                <th>Genre</th>
+                <th>Uploaded By</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="songTableBody">
+            </tbody>
+    </table>
+</div>
+
+<div id="player-container" style="display:none; position: fixed; bottom: 0; left: 0; width: 100%; background: #333; color: white; padding: 20px; border-top: 3px solid #ff4500;">
+    <strong id="now-playing">Select a song...</strong><br>
+    <audio id="main-player" controls style="width: 100%; margin-top: 10px;">
+        <source id="audio-source" src="" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+</div>
+
+    <br><br>
+    <button class="secondary" onclick="logout()" style="width: 100px;">Logout</button>
+</div>
+
+    <script src="auth.js"></script>
+
+    <script>
+        // Simple logout function to clear the browser memory
+        function logout() {
+            localStorage.removeItem('loggedInUser');
+            location.reload(); // Refresh the page to show login screen
+        }
+        

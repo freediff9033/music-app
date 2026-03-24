@@ -1,0 +1,11 @@
+# Step 1: Build the application
+FROM maven:3.8.6-openjdk-18 AS build
+COPY . /usr/src/app
+WORKDIR /usr/src/app
+RUN mvn clean package -DskipTests
+
+# Step 2: Run the application
+FROM openjdk:18-jdk-slim
+COPY --from=build /usr/src/app/target/quarkus-app/ /deployments/
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "/deployments/quarkus-run.jar"]
