@@ -1,7 +1,10 @@
-# STAGE 1: The "Kitchen" (Build the app)
+# STAGE 1: Build the app
 FROM maven:3.8.6-openjdk-18 AS build
 COPY . /usr/src/app
-WORKDIR /usr/src/app
+
+# ADD THE FOLDER NAME HERE:
+WORKDIR /usr/src/app/code-with-quarkus
+
 RUN mvn clean package -DskipTests
 
 # STAGE 2: The "Dining Room" (Run the app)
