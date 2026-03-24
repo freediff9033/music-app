@@ -2,9 +2,10 @@
 FROM maven:3.8.6-openjdk-18 AS build
 COPY . /usr/src/app
 
-# Change this line back to the root:
-WORKDIR /usr/src/app
+# This stays as is:
+WORKDIR /usr/src/app/code-with-quarkus
 
+RUN mvn clean package -DskipTests
 RUN mvn clean package -DskipTests
 # STAGE 2: The "Dining Room" (Run the app)
 # This uses the official Quarkus runtime image 
