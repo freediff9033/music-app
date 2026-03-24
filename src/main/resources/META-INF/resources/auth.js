@@ -125,7 +125,6 @@ async function loadSongs() {
         tableBody.innerHTML = ''; // Clear old list
 
         songs.forEach(song => {
-            const playBtn = `<button onclick="playMusic('${song.filePath}', '${song.title}')">▶ Play</button>`;
             tableBody.innerHTML += `
                 <tr>
                     <td>${song.title}</td>
@@ -147,17 +146,13 @@ async function loadSongs() {
 function playMusic(path, title) {
     const player = document.getElementById('main-player');
     const source = document.getElementById('audio-source');
-    const container = document.getElementById('player-container');
-    const label = document.getElementById('now-playing');
+    const playerDiv = document.getElementById('player-container');
+    const nowPlaying = document.getElementById('now-playing');
 
-    // 1. Update the title and show the player bar
-    label.innerText = "Now Playing: " + title;
-    container.style.display = "block";
-
-    // 2. Point the audio source to the file path (e.g., /music-files/1711234_song.mp3)
     source.src = path;
-
-    // 3. Important: Tell the browser to reload and start the music
-    player.load(); 
-    player.play().catch(e => console.error("Playback failed:", e));
+    nowPlaying.innerText = "Playing: " + title;
+    playerDiv.style.display = "block"; // Show the player at the bottom
+    
+    player.load(); // Reload the new file
+    player.play(); // Start playing!
 }

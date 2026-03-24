@@ -21,9 +21,9 @@ public class SongResource {
     // Initialize Cloudinary with your credentials
     // Tip: In a real cloud app, you'd use System.getenv("CLOUDINARY_URL") for security!
     Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
-        "cloud_name", "YOUR_CLOUD_NAME", 
-        "api_key", "YOUR_API_KEY",
-        "api_secret", "YOUR_API_SECRET",
+        "cloud_name", System.getenv("df5zzuedx"), 
+        "api_key",System.getenv("176433637264182"),
+        "api_secret", System.getenv("bblSeKnVNYZWauqb8FUXPKePgTI"),
         "secure", true
     ));
 
