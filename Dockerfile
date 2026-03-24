@@ -2,11 +2,10 @@
 FROM maven:3.8.6-openjdk-18 AS build
 COPY . /usr/src/app
 
-# ADD THE FOLDER NAME HERE:
-WORKDIR /usr/src/app/code-with-quarkus
+# Change this line back to the root:
+WORKDIR /usr/src/app
 
 RUN mvn clean package -DskipTests
-
 # STAGE 2: The "Dining Room" (Run the app)
 # This uses the official Quarkus runtime image 
 FROM registry.access.redhat.com/ubi9/openjdk-25-runtime:1.24
