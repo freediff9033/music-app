@@ -1,13 +1,13 @@
 # STAGE 1: Build
 FROM maven:3.8.6-openjdk-18 AS build
 
-# 1. Set the working directory
+# This now copies the CONTENTS of code-with-quarkus
 WORKDIR /usr/src/app
-
-# 2. Copy everything from your local folder to the container
 COPY . .
 
-# 3. Build the app (Maven will find the pom.xml right here)
+# Let's be 100% sure we see the pom.xml
+RUN ls -la
+
 RUN mvn clean package -DskipTests
 
 # STAGE 2: Run
